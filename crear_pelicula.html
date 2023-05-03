@@ -17,13 +17,17 @@
          src="https://kit.fontawesome.com/846e98f337.js"
          crossorigin="anonymous"
       ></script>
+		<script src="script.js" defer></script>
    </head>
    <body>
       <!-- Formulario para agregar peliculas -->
-      <div class="container col-6 mt-2 p-4 rounded bg-success-subtle">
+      <div class="container col	 mt-2 p-4 rounded bg-success-subtle">
          <h1 class="text-center text-primary">Crear pelicula</h1>
          <hr />
-         <form action="#" method="POST"  validate>
+         <div class="row">
+				<div class="col">
+					<form action="#" method="POST"   enctype="multipart/form-data" validate>
+
             <div class="input-group mb-3">
                <span class="input-group-text"
                   ><i class="fa-solid fa-video"></i
@@ -48,7 +52,11 @@
                   class="form-control"
                   aria-describedby="inputGroupFileAddon04"
                   aria-label="Upload"
-                  id="selectPoster"
+                  id="image_uploads"
+						name="image_uploads"
+						id="poster"
+						accept=".jpg, .jpeg, .png"
+						multiple
 						required
                />
             </div>
@@ -109,7 +117,7 @@
 									required
                         />
                         <label for="input_duracion"
-                           >Duracion de la pelicula</label
+                           >Duracion</label
                         >
                      </div>
                   </div>
@@ -163,6 +171,15 @@
                </button>
             </div>
          </form>
+				</div>
+				<div class="col">
+					<div class="container" id="preview" width="500" height="500">
+							<p>Seleccione un poster</p>
+					</div>
+
+				</div>
+			</div>
+
       </div>
 
       <!-- BootStrap scripts -->
