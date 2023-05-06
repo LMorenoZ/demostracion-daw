@@ -1,7 +1,78 @@
-String de conexión (controladores/conexion.php):
+Pasos a seguir para realizar el CRUD: Copiar cada seccion de codigo en el archivo donde se indica
 
+1. String de conexión (controladores/conexion.php):
 ----
 <?php
 $conexion = mysqli_connect('localhost', 'root', '', 'peliculasdb'); // servidor, usuario, contraseña, base de datos
 ?>
 ----
+
+
+2. Crear el script para traer los datos desde la base de datos (controladores/traer_peliculas.php):
+----
+<?php
+include 'conexion.php'; // Se importa el string de conexion
+
+if( isset($_POST) ) {
+   $nombre = $_POST['nombre'];
+   $genero = $_POST['genero'];
+   $estreno = $_POST['estreno'];
+
+   $query_select = "INSERT INTO `peliculas`(`nombre`, `genero`, `estreno`) VALUES ('$nombre ','$genero','$estreno')";
+   $resultado = mysqli_query($conexion, $query_select);
+
+   header('Location: ../index.php');
+}
+
+echo 'Ocurrio un error';
+
+?>
+----
+
+3. Importar el script 'traer_peliculas.php' al inicio de index.php (index.php):
+----
+<?php include('controladores/traer_peliculas.php'); ?>
+----
+
+4. Mostrar las peliculas en la tabla (index.php)
+------Copiar a partir de la linea 64:
+<?php while($pelicula = mysqli_fetch_array($result_select)) { ?>
+                  <tr>
+                     <td><?= $pelicula['nombre'] ?></td>
+                     <td><?= $pelicula['genero'] ?></td>
+                     <td><?= $pelicula['estreno'] ?></td>
+                     <td>
+                        <a href="controladores/editar_pelicula.php?id=<?= $pelicula['id'] ?>" class="btn btn-secondary">
+                           <i class="fas fa-solid fa-pencil"></i>
+                        </a>
+                        <a href="controladores/eliminar_pelicula.php?id=<?= $pelicula['id'] ?>" class="btn btn-danger">
+                           <i class="fa-solid fa-trash" style="color: #fff"></i>
+                        </a>
+                     </td>
+                  </tr>
+<?php } ?>
+------
+
+
+5. Script para crear pelicula (controladores/crear_pelicula.php)
+-----
+<?php
+include 'conexion.php'; // Se importa el string de conexion
+
+if( isset($_POST) ) {
+   $nombre = $_POST['nombre'];
+   $genero = $_POST['genero'];
+   $estreno = $_POST['estreno'];
+
+   $query_select = "INSERT INTO `peliculas`(`nombre`, `genero`, `estreno`) VALUES ('$nombre ','$genero','$estreno')";
+   $resultado = mysqli_query($conexion, $query_select);
+
+   header('Location: ../index.php');
+}
+
+echo 'Ocurrio un error';
+?>
+-----
+
+
+6. Script para editar pelicula

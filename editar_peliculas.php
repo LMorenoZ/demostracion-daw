@@ -1,3 +1,14 @@
+<?php
+   if (isset($_GET['id'])) {
+      include 'controladores/conexion.php';
+      $id_pelicula = $_GET['id'];
+
+      $query_select_id = "SELECT * FROM `peliculas` WHERE id = '$id_pelicula';";
+      $result = mysqli_query($conexion, $query_select_id);
+      $pelicula = mysqli_fetch_array($result);
+   }
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -15,15 +26,16 @@
       <div class="card card-body">
 
          <!-- Formulario para editar -->
-         <form action="save_task.php" method="post">
+         <form action="controladores/editar_post.php" method="post">
             <div class="form-group">
-               <input type="text" name="title" class="form-control" placeholder="Nombre pelicula" autofocus />
+               <input type="text" class="form-control" placeholder="Nombre pelicula" name="nombre" value="<?= $pelicula['nombre'] ?>" autofocus>
+               <input type="hidden"" class="form-control" autofocus name="id" value="<?= $pelicula['id'] ?>">
             </div>
             <div class="form-group my-2">
-               <input type="text" name="number" class="form-control" placeholder="Año de estreno" min="0" step="1" />
+               <input type="text" class="form-control" placeholder="Año de estreno" min="0" step="1" name="estreno" value="<?= $pelicula['estreno'] ?>" >
             </div>
             <div class="form-group my-2">
-               <select class="form-select" aria-label="Default select example">
+               <select class="form-select" aria-label="Default select example" name="genero">
                   <option selected>Genero</option>
                   <option value="Acción">Acción</option>
                   <option value="Drama">Drama</option>
@@ -31,7 +43,7 @@
                </select>
             </div>
             <div class="d-grid gap-2">
-               <button class="btn btn-primary" type="button" name="editar">Editar película</button>
+               <button class="btn btn-primary" type="submit" name="actualizar">Editar película</button>
             </div>
          </form>
 

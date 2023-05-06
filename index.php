@@ -1,3 +1,5 @@
+<?php include('controladores/traer_peliculas.php'); ?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -20,24 +22,26 @@
          <div class="col-md-3">
             <div class="card card-body">
                <h3 class="card-title text-secondary">Crear película</h3>
+
                <!-- Formulario para crear una película -->
-               <form action="save_task.php" method="post">
+               <form action="controladores/crear_pelicula.php" method="post">
                   <div class="form-group">
-                     <input type="text" name="title" class="form-control" placeholder="Nombre pelicula" autofocus />
+                     <input type="text" class="form-control" placeholder="Nombre pelicula" name="nombre" autofocus />
                   </div>
                   <div class="form-group my-2">
-                     <input type="text" name="number" class="form-control" placeholder="Año de estreno" min="0"
-                        step="1" />
+                     <input type="text" class="form-control" placeholder="Año de estreno" min="0" step="1" name="estreno"/>
                   </div>
                   <div class="form-group my-2">
-                     <select class="form-select" aria-label="Default select example">
+                     <select class="form-select" aria-label="Default select example" name="genero">
                         <option selected>Genero</option>
                         <option value="Acción">Acción</option>
                         <option value="Drama">Drama</option>
                         <option value="Suspenso">Suspenso</option>
                      </select>
                   </div>
-                  <div class="d-grid gap-2"><button class="btn btn-success" type="button" name="crear">Crear película</button></div>
+                  <div class="d-grid gap-2">
+                     <button class="btn btn-success" type="submit" name="crear">Crear película</button>
+                  </div>
                </form>
 
             </div>
@@ -55,19 +59,24 @@
                   </tr>
                </thead>
                <tbody>
+
+               <!-- 3. Mostrar las peliculas en la tabla  -->
+               <?php while($pelicula = mysqli_fetch_array($result_select)) { ?>
                   <tr>
-                     <td></td>
-                     <td></td>
-                     <td></td>
+                     <td><?= $pelicula['nombre'] ?></td>
+                     <td><?= $pelicula['genero'] ?></td>
+                     <td><?= $pelicula['estreno'] ?></td>
                      <td>
-                        <a href="edit.php?id=<?= $row['id'] ?>" class="btn btn-secondary">
+                        <a href="editar_peliculas.php?id=<?= $pelicula['id'] ?>" class="btn btn-secondary">
                            <i class="fas fa-solid fa-pencil"></i>
                         </a>
-                        <a href="delete_task.php?id=<?= $row['id'] ?>" class="btn btn-danger">
+                        <a href="controladores/eliminar_pelicula.php?id=<?= $pelicula['id'] ?>" class="btn btn-danger">
                            <i class="fa-solid fa-trash" style="color: #fff"></i>
                         </a>
                      </td>
                   </tr>
+               <?php } ?>
+
                </tbody>
             </table>
 
