@@ -1,0 +1,7 @@
+String de conexión (controladores/conexion.php):
+
+----
+<?php
+$conexion = mysqli_connect('localhost', 'root', '', 'peliculasdb'); // servidor, usuario, contraseña, base de datos
+?>
+----
