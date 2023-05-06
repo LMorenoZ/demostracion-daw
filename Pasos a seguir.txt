@@ -1,6 +1,6 @@
 Pasos a seguir para realizar el CRUD: Copiar cada seccion de codigo en el archivo donde se indica
 
-1. String de conexión (controladores/conexion.php):
+1. Crear el string de conexión (controladores/conexion.php):
 ----
 <?php
 $conexion = mysqli_connect('localhost', 'root', '', 'peliculasdb'); // servidor, usuario, contraseña, base de datos
@@ -10,29 +10,22 @@ $conexion = mysqli_connect('localhost', 'root', '', 'peliculasdb'); // servidor,
 
 2. Crear el script para traer los datos desde la base de datos (controladores/traer_peliculas.php):
 ----
-<?php
-include 'conexion.php'; // Se importa el string de conexion
+   <?php
+   include 'conexion.php';
 
-if( isset($_POST) ) {
-   $nombre = $_POST['nombre'];
-   $genero = $_POST['genero'];
-   $estreno = $_POST['estreno'];
+   $select_query = "SELECT * FROM peliculas";
+   $result_select = mysqli_query($conexion, $select_query); // array de resultados de la consulta
+   $cuantas_peliculas = mysqli_num_rows($result_select); // Numero de filas traidas = numero de peliculas
 
-   $query_select = "INSERT INTO `peliculas`(`nombre`, `genero`, `estreno`) VALUES ('$nombre ','$genero','$estreno')";
-   $resultado = mysqli_query($conexion, $query_select);
-
-   header('Location: ../index.php');
-}
-
-echo 'Ocurrio un error';
-
-?>
+   ?>
 ----
 
-3. Importar el script 'traer_peliculas.php' al inicio de index.php (index.php):
-----
+
+3. Importar el script 'traer_peliculas.php' al indice (index.php):
+---- Al inicio del documento:
 <?php include('controladores/traer_peliculas.php'); ?>
 ----
+
 
 4. Mostrar las peliculas en la tabla (index.php)
 ------Copiar a partir de la linea 64:
@@ -54,7 +47,7 @@ echo 'Ocurrio un error';
 ------
 
 
-5. Script para crear pelicula (controladores/crear_pelicula.php)
+5. Crear el script para crear la pelicula en la base de datos (controladores/crear_pelicula.php)
 -----
 <?php
 include 'conexion.php'; // Se importa el string de conexion
@@ -75,4 +68,54 @@ echo 'Ocurrio un error';
 -----
 
 
-6. Script para editar pelicula
+6. Crear el script para traer desde la base de datos solo la pelicula que se va a editar (editar_peliculas.php)
+------ Al inicio del documento:
+<?php
+   if (isset($_GET['id'])) {
+      include 'controladores/conexion.php';
+      $id_pelicula = $_GET['id'];
+
+      $query_select_id = "SELECT * FROM `peliculas` WHERE id = '$id_pelicula';";
+      $result = mysqli_query($conexion, $query_select_id);
+      $pelicula = mysqli_fetch_array($result);
+   }
+?>
+------
+
+
+7. Crear el script para actualizar los datos en la tabla (controladores/editar_post.php)
+----
+<?php
+
+if (isset($_POST['actualizar'])) {
+   include 'conexion.php';
+
+   $id = $_POST['id'];
+   $nombre = $_POST['nombre'];
+   $genero = $_POST['genero'];
+   $estreno = $_POST['estreno'];
+
+   $query_edit = "UPDATE `peliculas` SET `nombre`='$nombre',`genero`='$genero',`estreno`='$estreno' WHERE id = '$id'";
+   mysqli_query($conexion, $query_edit);
+
+   header('Location: ../index.php');
+}
+
+?>
+----
+
+
+8. Crear el script para eliminar una pelicula (controladores/eliminar_pelicula.php)
+-----
+<?php 
+   if ( isset($_GET['id']) ) {
+      include 'conexion.php';
+      $id_pelicula = $_GET['id'];
+
+      $query_delete = "DELETE FROM `peliculas` WHERE id = '$id_pelicula'";
+      $result = mysqli_query($conexion, $query_delete);
+   }
+
+   header('Location: ../index.php');
+?>
+-----

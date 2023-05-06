@@ -1,4 +1,6 @@
-<?php include('controladores/traer_peliculas.php'); ?>
+<!-- 3. Importar el script 'traer_peliculas.php' al inicio de index.php (index.php): -->
+
+<!--  -->
 
 <!DOCTYPE html>
 <html lang="es">
@@ -60,22 +62,10 @@
                </thead>
                <tbody>
 
-               <!-- 3. Mostrar las peliculas en la tabla  -->
-               <?php while($pelicula = mysqli_fetch_array($result_select)) { ?>
-                  <tr>
-                     <td><?= $pelicula['nombre'] ?></td>
-                     <td><?= $pelicula['genero'] ?></td>
-                     <td><?= $pelicula['estreno'] ?></td>
-                     <td>
-                        <a href="editar_peliculas.php?id=<?= $pelicula['id'] ?>" class="btn btn-secondary">
-                           <i class="fas fa-solid fa-pencil"></i>
-                        </a>
-                        <a href="controladores/eliminar_pelicula.php?id=<?= $pelicula['id'] ?>" class="btn btn-danger">
-                           <i class="fa-solid fa-trash" style="color: #fff"></i>
-                        </a>
-                     </td>
-                  </tr>
-               <?php } ?>
+               <!-- 4. Mostrar las peliculas en la tabla (index.php)  -->
+
+
+               <!--  -->
 
                </tbody>
             </table>
