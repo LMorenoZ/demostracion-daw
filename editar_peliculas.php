@@ -1,5 +1,14 @@
 <!-- 6. Crear el script para traer desde la base de datos solo la pelicula que se va a editar -->
+<?php
+if (isset($_GET['id'])) {
+   include 'controladores/conexion.php';
+   $id_pelicula = $_GET['id'];
 
+   $query_select_id = "SELECT * FROM `peliculas` WHERE id = '$id_pelicula';";
+   $result = mysqli_query($conexion, $query_select_id);
+   $pelicula = mysqli_fetch_array($result);
+}
+?>
 <!--  -->
 
 

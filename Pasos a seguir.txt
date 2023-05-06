@@ -28,7 +28,7 @@ $conexion = mysqli_connect('localhost', 'root', '', 'peliculasdb'); // servidor,
 
 
 4. Mostrar las peliculas en la tabla (index.php)
-------Copiar a partir de la linea 64:
+------Copiar a partir de la linea 66:
 <?php while($pelicula = mysqli_fetch_array($result_select)) { ?>
                   <tr>
                      <td><?= $pelicula['nombre'] ?></td>
